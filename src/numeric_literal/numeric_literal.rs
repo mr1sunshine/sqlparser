@@ -1,7 +1,13 @@
 use numeric_literal::hex_literal::hex_literal;
 use numeric_literal::int_literal::int_literal;
 
-named!(numeric_literal<&[u8]>,
+#[derive(Debug, PartialEq)]
+pub enum NumericLiteral {
+    Integer(i32),
+    Float(f64)
+}
+
+named!(pub numeric_literal<&[u8]>,
     alt!(
         hex_literal | int_literal
     )

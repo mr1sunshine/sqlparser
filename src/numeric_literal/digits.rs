@@ -1,7 +1,20 @@
 use nom::{digit};
+use std::str::FromStr;
+use std::str::from_utf8;
+use numeric_literal::numeric_literal::NumericLiteral;
 
-named!(pub digits<&[u8]>,
-    recognize!(digit)
+named!(pub digits<NumericLiteral>, 
+    do_parse!(
+        value: digit >>
+        (
+            NumericLiteral::Integer(
+                ||-> i32 {
+                        let t = from_utf8(value).unwrap();
+                        i32::from_str(t).unwrap()
+                }()
+            )
+        )
+    )
 );
 
 #[cfg(test)]
@@ -11,26 +24,26 @@ mod tests {
 
     #[test]
     fn test_digits_success_0() {
-        let res = digits("0".as_bytes()).unwrap();
-        assert_eq!(res, (&b""[..], &b"0"[..]));
+        let res = nom_value!(digits, "0".as_bytes());
+        assert_eq!(res, NumericLiteral::Integer(0));
     }
 
     #[test]
     fn test_digits_success_1() {
-        let res = digits("012".as_bytes()).unwrap();
-        assert_eq!(res, (&b""[..], &b"012"[..]));
+        let res = nom_value!(digits, "012".as_bytes());
+        assert_eq!(res, NumericLiteral::Integer(12));
     }
 
     #[test]
     fn test_digits_success_2() {
-        let res = digits("012ab".as_bytes()).unwrap();
-        assert_eq!(res, (&b"ab"[..], &b"012"[..]));
+        let res = nom_value!(digits, "012ab".as_bytes());
+        assert_eq!(res, NumericLiteral::Integer(12));
     }
 
     #[test]
     fn test_digits_success_3() {
-        let res = digits("42ab".as_bytes()).unwrap();
-        assert_eq!(res, (&b"ab"[..], &b"42"[..]));
+        let res = nom_value!(digits, "42ab".as_bytes());
+        assert_eq!(res, NumericLiteral::Integer(42));
     }
 
     #[test]
