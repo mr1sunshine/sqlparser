@@ -1,6 +1,5 @@
 use nom::hex_digit;
 use numeric_literal::numeric_literal_type::NumericLiteral;
-use std::str::FromStr;
 use std::str::from_utf8;
 
 named!(pub hex_literal<NumericLiteral>,

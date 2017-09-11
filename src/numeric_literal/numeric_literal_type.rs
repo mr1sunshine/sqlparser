@@ -1,4 +1,4 @@
-use std::fmt::{self, Debug, Display};
+use std::fmt::{self};
 use std::ops::{Add, Mul};
 
 #[derive(Debug, PartialEq)]

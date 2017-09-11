@@ -29,7 +29,7 @@ named!(pub second_part_of_float_literal<NumericLiteral>,
 #[cfg(test)]
 mod tests {
     use super::*;
-    use nom::{ErrorKind, Needed};
+    use nom::{ErrorKind};
 
     #[test]
     fn test_second_part_of_float_literal_success_0() {
