@@ -7,12 +7,10 @@ named!(pub digits<NumericLiteral>,
     do_parse!(
         value: digit >>
         (
-            NumericLiteral::Integer(
-                ||-> i32 {
-                        let t = from_utf8(value).unwrap();
-                        i32::from_str(t).unwrap()
-                }()
-            )
+            ||-> NumericLiteral {
+                let t = from_utf8(value).unwrap();
+                NumericLiteral::Integer(i32::from_str(t).unwrap())
+            }()
         )
     )
 );
