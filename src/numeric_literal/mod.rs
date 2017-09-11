@@ -1,3 +1,4 @@
+pub mod numeric_literal_type;
 pub mod numeric_literal;
 
 mod digits;

@@ -57,3 +57,64 @@ impl Mul for NumericLiteral {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_numeric_literal_format_integer() {
+        let test = NumericLiteral::Integer(1);
+        let test_str = format!("{}", test);
+        assert_eq!(test_str, "1");
+    }
+
+    #[test]
+    fn test_numeric_literal_format_float() {
+        let test = NumericLiteral::Float(0.5);
+        let test_str = format!("{}", test);
+        assert_eq!(test_str, "0.5");
+    }
+
+    #[test]
+    fn test_numeric_literal_add_integer_integer() {
+        assert_eq!(NumericLiteral::Integer(2), NumericLiteral::Integer(1) + NumericLiteral::Integer(1));
+    }
+
+    #[test]
+    fn test_numeric_literal_add_integer_float() {
+        assert_eq!(NumericLiteral::Float(1.5), NumericLiteral::Integer(1) + NumericLiteral::Float(0.5));
+    }
+
+    #[test]
+    fn test_numeric_literal_add_float_integer() {
+        assert_eq!(NumericLiteral::Float(1.5), NumericLiteral::Float(0.5) + NumericLiteral::Integer(1));
+    }
+
+    #[test]
+    fn test_numeric_literal_add_float_float() {
+        assert_eq!(NumericLiteral::Float(3.5), NumericLiteral::Float(1.75) + NumericLiteral::Float(1.75));
+    }
+
+    #[test]
+    fn test_numeric_literal_mul_integer_integer() {
+        assert_eq!(NumericLiteral::Integer(2), NumericLiteral::Integer(1) * NumericLiteral::Integer(2));
+    }
+
+    #[test]
+    fn test_numeric_literal_mul_integer_float() {
+        assert_eq!(NumericLiteral::Float(0.5), NumericLiteral::Integer(1) * NumericLiteral::Float(0.5));
+    }
+
+    #[test]
+    fn test_numeric_literal_mul_float_integer() {
+        assert_eq!(NumericLiteral::Float(0.5), NumericLiteral::Float(0.5) * NumericLiteral::Integer(1));
+    }
+
+    #[test]
+    fn test_numeric_literal_mul_float_float() {
+        assert_eq!(NumericLiteral::Float(3.0625), NumericLiteral::Float(1.75) * NumericLiteral::Float(1.75));
+    }
+
+
+}

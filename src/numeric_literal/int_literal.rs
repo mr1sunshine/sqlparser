@@ -1,6 +1,6 @@
 use numeric_literal::first_part_of_int_literal::first_part_of_int_literal;
 use numeric_literal::second_part_of_float_literal::second_part_of_float_literal;
-use numeric_literal::numeric_literal::NumericLiteral;
+use numeric_literal::numeric_literal_type::NumericLiteral;
 
 named!(pub int_literal<NumericLiteral>,
     do_parse!(

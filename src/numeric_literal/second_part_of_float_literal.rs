@@ -1,7 +1,7 @@
 use nom::{digit};
 use std::str::FromStr;
 use std::str::from_utf8;
-use numeric_literal::numeric_literal::NumericLiteral;
+use numeric_literal::numeric_literal_type::NumericLiteral;
 
 named!(pub second_part_of_float_literal<NumericLiteral>,
     do_parse!(

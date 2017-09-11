@@ -1,6 +1,6 @@
 use numeric_literal::digits::digits;
 use numeric_literal::start_from_dot::start_from_dot;
-use numeric_literal::numeric_literal::NumericLiteral;
+use numeric_literal::numeric_literal_type::NumericLiteral;
 
 named!(pub maybe_float_literal<NumericLiteral>,
     do_parse!(

@@ -1,6 +1,6 @@
 use numeric_literal::maybe_float_literal::maybe_float_literal;
 use numeric_literal::start_from_dot::start_from_dot;
-use numeric_literal::numeric_literal::NumericLiteral;
+use numeric_literal::numeric_literal_type::NumericLiteral;
 
 named!(pub first_part_of_int_literal<NumericLiteral>,
     alt_complete!(maybe_float_literal | start_from_dot)
