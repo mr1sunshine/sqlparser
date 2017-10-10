@@ -78,14 +78,12 @@ mod tests {
     #[test]
     #[should_panic]
     fn test_literal_value_blob_error_3() {
-        let res = literal_value_blob("x'444'".as_bytes()).unwrap_err();
-        //assert_eq!(res, ErrorKind::TakeUntil);
+        literal_value_blob("x'444'".as_bytes()).unwrap_err();
     }
 
     #[test]
     #[should_panic]
     fn test_literal_value_blob_error_4() {
-        let res = literal_value_blob("x'GG'".as_bytes()).unwrap_err();
-        //assert_eq!(res, ErrorKind::TakeUntil);
+        literal_value_blob("x'GG'".as_bytes()).unwrap_err();
     }
 }

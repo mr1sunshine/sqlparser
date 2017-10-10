@@ -1,8 +1,8 @@
-use signed_number::signed_number_type::SignedNumber;
+use numeric_literal::numeric_literal_type::NumericLiteral;
 
 #[derive(Debug, PartialEq)]
 pub enum LiteralValue {
-    SignedNumber(SignedNumber),
+    NumericLiteral(NumericLiteral),
     StringLiteral(String),
     BlobLiteral(Box<[u8]>),
     Null,
