@@ -1,4 +1,4 @@
-use literal_value::literal_value_signed_number::literal_value_signed_number;
+use literal_value::literal_value_numeric_literal::literal_value_numeric_literal;
 use literal_value::literal_value_string::literal_value_string;
 use literal_value::literal_value_blob::literal_value_blob;
 use literal_value::literal_value_null::literal_value_null;
@@ -9,7 +9,7 @@ use literal_value::literal_value_type::LiteralValue;
 
 named!(pub literal_value<LiteralValue>,
     alt_complete!(
-        literal_value_signed_number |
+        literal_value_numeric_literal |
         literal_value_string |
         literal_value_blob |
         literal_value_null |
@@ -23,30 +23,30 @@ named!(pub literal_value<LiteralValue>,
 mod tests {
     use super::*;
     use nom::{ErrorKind, Needed};
-    use signed_number::signed_number_type::SignedNumber;
+    use numeric_literal::numeric_literal_type::NumericLiteral;
 
     #[test]
     fn test_literal_value_success_0() {
         let res = nom_value!(literal_value, "10.1E-10".as_bytes());
-        assert_eq!(res, LiteralValue::SignedNumber(SignedNumber::Float(0.00000000101)));
+        assert_eq!(res, LiteralValue::NumericLiteral(NumericLiteral::Float(0.00000000101)));
     }
 
     #[test]
     fn test_literal_value_success_1() {
-        let res = nom_value!(literal_value, "-10.1E-10".as_bytes());
-        assert_eq!(res, LiteralValue::SignedNumber(SignedNumber::Float(-0.00000000101)));
+        let res = nom_value!(literal_value, "10.1E-10".as_bytes());
+        assert_eq!(res, LiteralValue::NumericLiteral(NumericLiteral::Float(0.00000000101)));
     }
 
     #[test]
     fn test_literal_value_success_2() {
-        let res = nom_value!(literal_value, "+42".as_bytes());
-        assert_eq!(res, LiteralValue::SignedNumber(SignedNumber::Integer(42)));
+        let res = nom_value!(literal_value, "42".as_bytes());
+        assert_eq!(res, LiteralValue::NumericLiteral(NumericLiteral::Integer(42)));
     }
 
     #[test]
     fn test_literal_value_success_3() {
-        let res = nom_value!(literal_value, "-42".as_bytes());
-        assert_eq!(res, LiteralValue::SignedNumber(SignedNumber::Integer(-42)));
+        let res = nom_value!(literal_value, "42".as_bytes());
+        assert_eq!(res, LiteralValue::NumericLiteral(NumericLiteral::Integer(42)));
     }
 
     #[test]
@@ -134,7 +134,7 @@ mod tests {
     #[should_panic]
     fn test_literal_value_error_3() {
         let arr: [u8; 7] = [0x27, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x27];
-        let res = literal_value(&arr).unwrap_err();
+        literal_value(&arr).unwrap_err();
         //assert_eq!(res, ErrorKind::TakeUntil);
     }
 
@@ -153,15 +153,13 @@ mod tests {
     #[test]
     #[should_panic]
     fn test_literal_value_error_6() {
-        let res = literal_value("x'444'".as_bytes()).unwrap_err();
-        //assert_eq!(res, ErrorKind::TakeUntil);
+        literal_value("x'444'".as_bytes()).unwrap_err();
     }
 
     #[test]
     #[should_panic]
     fn test_literal_value_error_7() {
-        let res = literal_value("x'GG'".as_bytes()).unwrap_err();
-        //assert_eq!(res, ErrorKind::TakeUntil);
+        literal_value("x'GG'".as_bytes()).unwrap_err();
     }
 
     #[test]
