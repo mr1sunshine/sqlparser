@@ -1,4 +1,4 @@
-use serialize::hex::{FromHex};
+use literal_value::serialize::hex::{FromHex};
 use literal_value::literal_value_type::LiteralValue;
 
 

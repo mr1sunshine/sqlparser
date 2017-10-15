@@ -1,3 +1,6 @@
+
+extern crate serialize;
+
 pub mod literal_value_type;
 pub mod literal_value;
 

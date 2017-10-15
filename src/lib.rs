@@ -4,8 +4,6 @@
 #[macro_use]
 extern crate nom;
 
-extern crate serialize;
-
 #[macro_use]
 mod helpers;
 
@@ -14,5 +12,6 @@ mod signed_number;
 mod literal_value;
 mod column_constraint;
 mod table_constraint;
+mod type_name;
 
 
