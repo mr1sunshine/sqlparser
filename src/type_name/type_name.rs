@@ -19,9 +19,9 @@ named!(one_number<SignedNumber>,
 named!(two_numbers<(SignedNumber, SignedNumber)>,
     do_parse!(
         tag!("(") >>
-        number1 : signed_number >>
+        number1 : ws!(signed_number) >>
         tag!(",") >>
-        number2 : signed_number >>
+        number2 : ws!(signed_number) >>
         tag!(")") >>
         (
             (number1, number2)
@@ -69,7 +69,6 @@ named!(pub type_name<TypeName>,
 #[cfg(test)]
 mod tests {
     use super::*;
-    use nom::{ErrorKind, Needed};
     use type_name::type_name_type::TypeName;
 
     #[test]
@@ -124,6 +123,16 @@ mod tests {
     #[test]
     fn type_name_success_6() {
         let res = nom_value!(type_name, "    test    test     (5,5)".as_bytes());
+        assert_eq!(res, TypeName::NameWithTwoNumbers {
+            name: vec!["test".to_string(), "test".to_string()],
+            number1: SignedNumber::Integer(5),
+            number2: SignedNumber::Integer(5)
+        });
+    }
+
+    #[test]
+    fn type_name_success_7() {
+        let res = nom_value!(type_name, "    test    test     (   5   ,   5   )".as_bytes());
         assert_eq!(res, TypeName::NameWithTwoNumbers {
             name: vec!["test".to_string(), "test".to_string()],
             number1: SignedNumber::Integer(5),

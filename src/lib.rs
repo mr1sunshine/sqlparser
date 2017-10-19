@@ -13,5 +13,7 @@ mod literal_value;
 mod column_constraint;
 mod table_constraint;
 mod type_name;
+mod column_def;
+mod create_table_stmt;
 
 
