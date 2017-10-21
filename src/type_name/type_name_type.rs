@@ -8,7 +8,7 @@ pub enum TypeName {
     NameWithNumber {
         name: Vec<String>,
         number: SignedNumber
-    },
+    },  
     NameWithTwoNumbers {
         name: Vec<String>,
         number1: SignedNumber,
