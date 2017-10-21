@@ -2,7 +2,7 @@ use literal_value::literal_value_type::LiteralValue;
 
 named!(pub literal_value_null<LiteralValue>, 
     do_parse!(
-        tag!("NULL") >>
+        tag_no_case!("NULL") >>
         (
             LiteralValue::Null
         )

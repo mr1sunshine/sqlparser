@@ -5,7 +5,7 @@ use literal_value::literal_value_type::LiteralValue;
 named!(pub literal_value_blob<LiteralValue>, 
     do_parse!(
         value: delimited!(
-            alt!(tag!("X'") | tag!("x'")),
+            tag_no_case!("x'"),
             take_until!("'"),
             tag!("'")
         ) >>

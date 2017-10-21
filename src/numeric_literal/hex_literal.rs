@@ -4,7 +4,7 @@ use std::str::from_utf8;
 
 named!(pub hex_literal<NumericLiteral>,
     do_parse!(
-        tag!("0x") >>
+        tag_no_case!("0x") >>
         value: hex_digit >>
         (
             || -> NumericLiteral {

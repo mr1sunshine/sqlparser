@@ -16,12 +16,12 @@ named!(schema_name<String>,
 
 named!(pub create_table_stmt<CreateTableStatement>,
     do_parse!(
-        ws!(tag!("CREATE")) >>
-        tmp: opt!(ws!(alt_complete!(tag!("TEMPORARY") | tag!("TEMP")))) >>
-        ws!(tag!("TABLE")) >>
-        if_not_exists: opt!(complete!(ws!(tuple!(tag!("IF"), tag!("NOT"), tag!("EXISTS"))))) >>
+        ws!(tag_no_case!("CREATE")) >>
+        tmp: opt!(ws!(alt_complete!(tag_no_case!("TEMPORARY") | tag_no_case!("TEMP")))) >>
+        ws!(tag_no_case!("TABLE")) >>
+        if_not_exists: opt!(complete!(ws!(tuple!(tag_no_case!("IF"), tag_no_case!("NOT"), tag_no_case!("EXISTS"))))) >>
         schema_name: opt!(ws!(schema_name)) >>
-        table_name: ws!(alphanumeric) >>
+        table_name: alphanumeric >>
         desc: ws!(table_description) >>
         (
             || -> CreateTableStatement {
@@ -171,4 +171,39 @@ mod tests {
         assert_eq!(res, reference);
     }
 
+    #[test]
+    fn create_table_stmt_test_success_4() {
+        let res = nom_value!(create_table_stmt, "create TABLE some.table (id INT, name VARCHAR)".as_bytes());
+        let reference = CreateTableStatement { 
+            is_temp: false, 
+            if_not_exists: false, 
+            schema_name: Some("some".to_string()), 
+            table_name: "table".to_string(), 
+            description: TableDescription::Described { 
+                column_definitions: vec![
+                    ColumnDef { 
+                        column_name: "id".to_string(), 
+                        type_name: Some(
+                            TypeName::OnlyName { 
+                                name: vec!["INT".to_string()]
+                            }
+                        ), 
+                        column_constraint_list: vec![] 
+                    }, 
+                    ColumnDef { 
+                        column_name: "name".to_string(),
+                        type_name: Some(
+                            TypeName::OnlyName { 
+                                name: vec!["VARCHAR".to_string()]
+                            }
+                        ), 
+                        column_constraint_list: vec![]
+                    }
+                ], 
+                table_constraints: vec![], 
+                without_rowid: false
+            } 
+        };
+        assert_eq!(res, reference);
+    }
 }

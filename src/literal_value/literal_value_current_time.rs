@@ -2,7 +2,7 @@ use literal_value::literal_value_type::LiteralValue;
 
 named!(pub literal_value_current_time<LiteralValue>, 
     do_parse!(
-        tag!("CURRENT_TIME") >>
+        tag_no_case!("CURRENT_TIME") >>
         (
             LiteralValue::CurrentTime
         )

@@ -46,7 +46,7 @@ named!(pub table_description<TableDescription>,
         columns: column_def_list >>
         table_constraints: many0!(comma_table_constraint) >>
         tag!(")") >>
-        without_rowid: opt!(complete!(ws!(tuple!(tag!("WITHOUT"), tag!("ROWID"))))) >>
+        without_rowid: opt!(complete!(ws!(tuple!(tag_no_case!("WITHOUT"), tag_no_case!("ROWID"))))) >>
         (
             || -> TableDescription {
                 let tmp: bool;
@@ -73,7 +73,6 @@ mod tests {
     #[test]
     fn comma_column_def_test() {
         let res = nom_value!(comma_column_def, ", id INT".as_bytes());
-        println!("{:?}", res);
         assert_eq!(res, ColumnDef { 
                             column_name: "id".to_string(),
                             type_name: Some(
