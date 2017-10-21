@@ -1,33 +1,12 @@
-use column_def::column_def_type::ColumnDef;
-use table_constraint::table_constraint_type::TableConstraint;
-
-#[derive(Debug, PartialEq)]
-enum TableColumns {
-    Described {
-        column_definitions: Vec<ColumnDef>,
-        table_constraints: Vec<TableConstraint>,
-        without_rowid: bool
-    },
-    Selected
-}
-
-impl TableColumns {
-    fn new() -> Self {
-        TableColumns::Described {
-            column_definitions: Vec::new(),
-            table_constraints: Vec::new(),
-            without_rowid: false
-        }
-    }
-}
+use create_table_stmt::table_description_type::TableDescription;
 
 #[derive(Debug, PartialEq)]
 pub struct CreateTableStatement {
-    is_temp: bool,
-    if_not_exists: bool,
-    schema_name: Option<String>,
-    table_name: String,
-    columns: TableColumns
+    pub is_temp: bool,
+    pub if_not_exists: bool,
+    pub schema_name: Option<String>,
+    pub table_name: String,
+    pub description: TableDescription
 }
 
 impl CreateTableStatement {
@@ -37,7 +16,7 @@ impl CreateTableStatement {
             if_not_exists: false,
             schema_name: Option::None,
             table_name: String::new(),
-            columns: TableColumns::new(),
+            description: TableDescription::new(),
         }
     }
 }

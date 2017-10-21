@@ -1,6 +1,6 @@
 use column_def::column_def_type::ColumnDef;
 use type_name::type_name::type_name;
-use column_constraint::column_constraint::column_constraint;
+//use column_constraint::column_constraint::column_constraint;
 use nom::{alphanumeric};
 use std::str;
 
@@ -8,12 +8,12 @@ named!(pub column_def<ColumnDef>,
     do_parse!(
         column_name: ws!(alphanumeric) >>
         type_name: opt!(complete!(type_name)) >>
-        column_constraints: ws!(many0!(column_constraint)) >>
+        //column_constraints: ws!(many0!(column_constraint)) >>
         (
             ColumnDef {
                 column_name: str::from_utf8(column_name).unwrap().to_string(),
                 type_name: type_name,
-                column_constraint_list: column_constraints
+                column_constraint_list: vec![] //column_constraints
             }
         )
     )
