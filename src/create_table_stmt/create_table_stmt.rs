@@ -1,9 +1,7 @@
 use create_table_stmt::create_table_stmt_type::CreateTableStatement;
 use create_table_stmt::table_description::table_description;
+use table_name::table_name::table_name;
 use helpers::schema_name_dot;
-
-use nom::alphanumeric;
-use std::str;
 
 named!(pub create_table_stmt<CreateTableStatement>,
     do_parse!(
@@ -12,7 +10,7 @@ named!(pub create_table_stmt<CreateTableStatement>,
         ws!(tag_no_case!("TABLE")) >>
         if_not_exists: opt!(complete!(ws!(tuple!(tag_no_case!("IF"), tag_no_case!("NOT"), tag_no_case!("EXISTS"))))) >>
         schema_name: opt!(ws!(schema_name_dot)) >>
-        table_name: alphanumeric >>
+        table_name: table_name >>
         desc: ws!(table_description) >>
         (
             || -> CreateTableStatement {
@@ -26,7 +24,7 @@ named!(pub create_table_stmt<CreateTableStatement>,
                     None => result.if_not_exists = false
                 }
                 result.schema_name = schema_name;
-                result.table_name = str::from_utf8(table_name).unwrap().to_string();
+                result.table_name = table_name;
                 result.description = desc;
                 result
             }()
