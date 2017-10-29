@@ -15,5 +15,8 @@ mod table_constraint;
 mod type_name;
 mod column_def;
 mod create_table_stmt;
+mod table_name;
+mod scheme_name;
+mod qualified_table_name;
 
 

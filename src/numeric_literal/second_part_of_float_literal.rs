@@ -5,7 +5,7 @@ use numeric_literal::numeric_literal_type::NumericLiteral;
 
 named!(pub second_part_of_float_literal<NumericLiteral>,
     do_parse!(
-        alt!(tag!("E") | tag!("e")) >>
+        tag_no_case!("E") >>
         sign: opt!(alt!(tag!("+") | tag!("-"))) >>
         value: digit >>
         (
@@ -53,7 +53,7 @@ mod tests {
     #[test]
     fn test_second_part_of_float_literal_error_0() {
         let res = second_part_of_float_literal("42.a".as_bytes()).unwrap_err();
-        assert_eq!(res, ErrorKind::Alt);
+        assert_eq!(res, ErrorKind::Tag);
     }
 
     #[test]
